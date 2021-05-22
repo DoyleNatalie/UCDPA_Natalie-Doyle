@@ -17,8 +17,14 @@ import pandas as pd
 #import matplotlib as plt
 Doge =pd.read_csv("Dogecoin Historical Data.csv")
 Bit =pd.read_csv("Bitcoin Historical Data.csv")
-print(Doge.info())
-print(Bit.info())
+Google =pd.read_csv("GOOGL.csv",index_col="Date")
+AMD = pd.read_csv("AMD.csv",index_col="Date")
 
-print(Doge.head())
-print(Bit.head())
+print(Google.head())
+print(AMD.head())
+#print(Doge.head())
+#print(Bit.head())
+
+Google_vs_AMD=Google.merge(AMD,on="Date",how='left',suffixes=('_Google','_AMD'))
+print(Google_vs_AMD.head())
+print(Google_vs_AMD.info())
