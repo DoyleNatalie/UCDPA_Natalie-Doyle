@@ -10,38 +10,42 @@
 # 6) Generate Valuable Insights - 5 insights from the visualization. [3]
 
 
-# 2 import a CSV file into Pandas DataFrame
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-
 #import matplotlib as plt
+
+Forbes_top2000= pd.read_csv("Forbes Top2000 2017.csv")
+#print(Forbes_top2000.head())
+Forbes_top2000.drop(columns="Unnamed: 0",axis=1,inplace=True)
+#print(Forbes_top2000.head())
+Forbes_missing=Forbes_top2000.isnull().sum()
+#print(Forbes_missing)
+Forbes_cleandata=Forbes_top2000.fillna("unknown")
+Forbes=Forbes_cleandata.isnull().sum()
+#print(Forbes)
+
 Doge =pd.read_csv("Dogecoin Historical Data.csv")
 Bit =pd.read_csv("Bitcoin Historical Data.csv")
+Doge_sorted =Doge.sort_values("Change %",ascending=False)
+#print(Doge_sorted.head())
+
+
 Ggl =pd.read_csv("GOOGL.csv",index_col="Date")
 AMD = pd.read_csv("AMD.csv",index_col="Date")
 
-#print(Ggl.head())
-#print(AMD.head())
-#print(Doge.head())
-#print(Bit.head())
-
 Ggl_vs_AMD=Ggl.merge(AMD,on="Date",how='left',suffixes=('_Ggl','_AMD'))
-Ggl_AMD_Missing_values=Ggl_vs_AMD.isnull().sum()
-#print(Ggl_AMD_Missing_values)
 #print(Ggl_vs_AMD.head())
-#print(Ggl_vs_AMD.info())
 
-
-# Highest stock price.
-Highest = Ggl_vs_AMD.sort_values("High_Ggl",ascending=False)
-Highest_review=Highest[["High_Ggl","High_AMD"]]
-#print(Highest_review.head())
-
-Price_Compare=Ggl_vs_AMD[["Open_Ggl","Open_AMD"]]
-#print(Price_Compare.head())
+Ggl_AMD_Compare=Ggl_vs_AMD[["Open_Ggl","Open_AMD"]]
+#print(Ggl_AMD_Compare.head())
 
 #ploting Google Vs AMD stock prices
-#Price_Compare.plot(x="Open_Ggl",kind="line")
-#plt.legend(["Google","AMD"])
-#plt.show()
+fig,ax=plt.subplots()
+ax.plot(Ggl_AMD_Compare.index,Ggl_AMD_Compare["Open_Ggl"],color='red')
+ax.set_xlabel('Date')
+ax.set_ylabel('Google stock Price',color='red')
+ax2=ax.twinx()
+ax2.plot(Ggl_AMD_Compare.index,Ggl_AMD_Compare["Open_AMD"],color='blue',)
+ax2.set_ylabel('AMD stock price',color='blue')
+plt.show()
