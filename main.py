@@ -13,6 +13,7 @@
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+from datetime import datetime
 #import matplotlib as plt
 
 Forbes_top2000= pd.read_csv("Forbes Top2000 2017.csv")
@@ -21,24 +22,73 @@ Forbes_top2000.drop(columns="Unnamed: 0",axis=1,inplace=True)
 #print(Forbes_top2000.head())
 Forbes_missing=Forbes_top2000.isnull().sum()
 #print(Forbes_missing)
-Forbes_cleandata=Forbes_top2000.fillna("unknown")
-Forbes=Forbes_cleandata.isnull().sum()
-#print(Forbes)
+Forbes=Forbes_top2000.fillna("unknown")
+#print(Forbes.info())
+#print(Forbes.head())
 
-Doge =pd.read_csv("Dogecoin Historical Data.csv")
-Bit =pd.read_csv("Bitcoin Historical Data.csv")
-Doge_sorted =Doge.sort_values("Change %",ascending=False)
+Forbes_sectors=Forbes[["Sector","Market Value"]]
+#print(Forbes_sectors.head())
+Best_sector=Forbes_sectors.groupby("Sector")["Market Value"].sum()
+#print(Best_sector)
+Best_sector.plot(kind="bar",title="Top Sectors", rot=340)
+plt.x_label=("Sector")
+plt.y_label=("Market_share")
+plt.show()
+
+#Best_sector=Forbes.groupby("Sector")
+#print(Best_sector.head())
+
+#plt.bar(x=Forbes["Sector"],y=Forbes["Market Value"])
+#plt.show()
+
+Doge=pd.read_csv("Dogecoin Historical Data.csv")
+#plt.scatter(x=Doge["Date"], y=Doge["Price"])
+#plt.show()
+
+Doge_change=Doge.loc[:,"Change %"].max()
+#print(Doge_change)
+
+Doge_sorted=Doge.sort_values("Change %",ascending=0)
 #print(Doge_sorted.head())
 
+#plt.plot(Doge.index,Doge["Price"],color='red',linestyle='--')
+#plt.show()
+
+Bit =pd.read_csv("Bitcoin Historical Data.csv")
+
+plt.scatter(x=Bit["Date"],y=Bit["Price"])
+#plt.show()
 
 Ggl =pd.read_csv("GOOGL.csv",index_col="Date")
 AMD = pd.read_csv("AMD.csv",index_col="Date")
+#print(Ggl.head())
+
+Ggl ["Diff$"] = Ggl["Close"]-Ggl["Open"]
+Ggl_Sorted= Ggl.sort_values("Diff$", ascending=False)
+#print(Ggl_Sorted.info())
+#Ggl2016_2018= Ggl_Sorted[2016/01/01:2018/12/31]
+#print(Ggl2016_2018.head())
+
 
 Ggl_vs_AMD=Ggl.merge(AMD,on="Date",how='left',suffixes=('_Ggl','_AMD'))
 #print(Ggl_vs_AMD.head())
 
 Ggl_AMD_Compare=Ggl_vs_AMD[["Open_Ggl","Open_AMD"]]
 #print(Ggl_AMD_Compare.head())
+Ggl_Max=Ggl_AMD_Compare.loc[:,"Open_Ggl"].max()
+Ggl_Mean=Ggl_AMD_Compare.loc[:,"Open_Ggl"].mean()
+Ggl_Min=Ggl_AMD_Compare.loc[:,"Open_Ggl"].min()
+Ggl_Std=Ggl_AMD_Compare.loc[:,"Open_Ggl"].std()
+#print(Ggl_Max)
+#print(Ggl_Mean)
+#print(Ggl_Min)
+#print(Ggl_Std)
+standard_deviation=Ggl_Mean+Ggl_Std
+#print(standard_deviation)
+
+#plt.scatter(x="Date", y="Open_Ggl")
+#plt.show()
+
 
 #ploting Google Vs AMD stock prices
 fig,ax=plt.subplots()
@@ -48,4 +98,6 @@ ax.set_ylabel('Google stock Price',color='red')
 ax2=ax.twinx()
 ax2.plot(Ggl_AMD_Compare.index,Ggl_AMD_Compare["Open_AMD"],color='blue',)
 ax2.set_ylabel('AMD stock price',color='blue')
-plt.show()
+#plt.show()
+
+
