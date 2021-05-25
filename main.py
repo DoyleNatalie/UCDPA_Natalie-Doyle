@@ -17,31 +17,28 @@ from datetime import datetime
 #import matplotlib as plt
 
 Forbes_top2000= pd.read_csv("Forbes Top2000 2017.csv")
-#print(Forbes_top2000.head())
+print(Forbes_top2000.head())
 Forbes_top2000.drop(columns="Unnamed: 0",axis=1,inplace=True)
-#print(Forbes_top2000.head())
+print(Forbes_top2000.head())
 Forbes_missing=Forbes_top2000.isnull().sum()
-#print(Forbes_missing)
+print(Forbes_missing)
 Forbes=Forbes_top2000.fillna("unknown")
-#print(Forbes.info())
+print(Forbes.info())
 #print(Forbes.head())
 
 Forbes_sectors=Forbes[["Sector","Market Value"]]
-#print(Forbes_sectors.head())
+print(Forbes_sectors.head())
 Best_sector=Forbes_sectors.groupby("Sector")["Market Value"].sum()
-#print(Best_sector)
+print(Best_sector)
+
 Best_sector.plot(kind="bar",title="Top Sectors", rot=340)
 plt.x_label=("Sector")
-plt.y_label=("Market_share")
+plt.y_label=("Market_share,$")
 plt.show()
-
-#Best_sector=Forbes.groupby("Sector")
-#print(Best_sector.head())
-
-#plt.bar(x=Forbes["Sector"],y=Forbes["Market Value"])
-#plt.show()
+plt.savefig("Forbes Top Sectors.png")
 
 Doge=pd.read_csv("Dogecoin Historical Data.csv")
+
 #plt.scatter(x=Doge["Date"], y=Doge["Price"])
 #plt.show()
 
