@@ -17,33 +17,42 @@ from datetime import datetime
 #import matplotlib as plt
 
 Forbes_top2000= pd.read_csv("Forbes Top2000 2017.csv")
-print(Forbes_top2000.head())
+#print(Forbes_top2000.head())
 Forbes_top2000.drop(columns="Unnamed: 0",axis=1,inplace=True)
-print(Forbes_top2000.head())
+#print(Forbes_top2000.head())
 Forbes_missing=Forbes_top2000.isnull().sum()
-print(Forbes_missing)
+#print(Forbes_missing)
 Forbes=Forbes_top2000.fillna("unknown")
-print(Forbes.info())
+#print(Forbes.info())
 #print(Forbes.head())
 
 Forbes_sectors=Forbes[["Sector","Market Value"]]
-print(Forbes_sectors.head())
+#print(Forbes_sectors.head())
 Best_sector=Forbes_sectors.groupby("Sector")["Market Value"].sum()
-print(Best_sector)
+#print(Best_sector)
 
-Best_sector.plot(kind="bar",title="Top Sectors", rot=340)
-plt.x_label=("Sector")
-plt.y_label=("Market_share,$")
-plt.show()
-plt.savefig("Forbes Top Sectors.png")
+#Best_sector.plot(kind="bar",title="Top Sectors", rot=340)
+#plt.x_label=("Sector")
+#plt.y_label=("Market_share,$")
+#plt.show()
+#plt.savefig("Forbes Top Sectors.png")
 
 Doge=pd.read_csv("Dogecoin Historical Data.csv")
+#print(Doge.info())
+Doge_2020_2021=Doge.head(481)
 
-#plt.scatter(x=Doge["Date"], y=Doge["Price"])
-#plt.show()
+#Chart to overview of stock price change
+Doge.plot(x="Date", y="Price",rot=90,title='Doge Stock price Apr 2021 - Jun 2017')
+plt.show()
 
+#Chart looking at Jan 2020 to Apr 2021.
+Doge_2020_2021.plot(x="Date", y="Price",title='Doge stock price Apr 2012 - Jan 2020')
+
+plt.show()
+#outlier is date with greates % increase.
 Doge_change=Doge.loc[:,"Change %"].max()
-#print(Doge_change)
+print(Doge_change)
+
 
 Doge_sorted=Doge.sort_values("Change %",ascending=0)
 #print(Doge_sorted.head())
