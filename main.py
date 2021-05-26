@@ -13,8 +13,6 @@
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-from datetime import datetime
-#import matplotlib as plt
 
 Forbes_top2000= pd.read_csv("Forbes Top2000 2017.csv")
 #print(Forbes_top2000.head())
@@ -28,6 +26,8 @@ Forbes=Forbes_top2000.fillna("unknown")
 
 Forbes_sectors=Forbes[["Sector","Market Value"]]
 #print(Forbes_sectors.head())
+
+#List of sectors with their total market share
 Best_sector=Forbes_sectors.groupby("Sector")["Market Value"].sum()
 #print(Best_sector)
 
@@ -38,26 +38,25 @@ Best_sector=Forbes_sectors.groupby("Sector")["Market Value"].sum()
 #plt.savefig("Forbes Top Sectors.png")
 
 Doge=pd.read_csv("Dogecoin Historical Data.csv")
+
 #print(Doge.info())
 Doge_2020_2021=Doge.head(481)
 
 #Chart to overview of stock price change
-Doge.plot(x="Date", y="Price",rot=90,title='Doge Stock price Apr 2021 - Jun 2017')
-plt.show()
+#Doge.plot(x="Date", y="Price",rot=90,title='Doge Stock price Apr 2021 - Jun 2017')
+#plt.show()
 
 #Chart looking at Jan 2020 to Apr 2021.
-Doge_2020_2021.plot(x="Date", y="Price",title='Doge stock price Apr 2012 - Jan 2020')
-
+Doge_2020_2021.plot(x="Date", y="Price",title='Doge stock price Apr 2012 - Jan 2020',color='red')
 plt.show()
+
 #outlier is date with greates % increase.
+Doge_change_order=Doge.sort_values(["Change %"],ascending=False)
+print(Doge_change_order.head(1))
+
 Doge_change=Doge.loc[:,"Change %"].max()
-print(Doge_change)
 
-
-Doge_sorted=Doge.sort_values("Change %",ascending=0)
-#print(Doge_sorted.head())
-
-#plt.plot(Doge.index,Doge["Price"],color='red',linestyle='--')
+#plt.plot(Doge.index,Doge["Price"],color='red')
 #plt.show()
 
 Bit =pd.read_csv("Bitcoin Historical Data.csv")
