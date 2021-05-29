@@ -26,11 +26,11 @@ Forbes_sectors = Forbes[["Sector", "Market Value"]]
 Best_sector = Forbes_sectors.groupby("Sector")["Market Value"].sum()
 #print(Best_sector)
 
-#Best_sector.plot(kind="bar", title="Top Sectors", rot=340)
+# Best_sector.plot(kind="bar", title="Top Sectors", rot=340)
 plt.x_label = "Sector"
 plt.y_label = "Market_share,$"
 #plt.show()
-#plt.savefig("Forbes Top Sectors.png")
+plt.savefig("Forbes Top Sectors.png")
 
 Doge = pd.read_csv("Dogecoin Historical Data.csv")
 #print(Doge.info())
@@ -38,7 +38,7 @@ Doge = pd.read_csv("Dogecoin Historical Data.csv")
 # Chart to overview of stock price change
 Doge.plot(x="Date", y="Price", rot=90, title='Doge Stock price Apr 2021 - Jun 2017')
 #plt.show()
-#plt.savefig("Doge Stock price Apr 2021 - Jun 2017")
+plt.savefig("Doge Stock price Apr 2021 - Jun 2017")
 
 # Subset 2021_2020 stock price data
 Doge_2020_2021 = Doge.head(481)
@@ -46,7 +46,7 @@ Doge_2020_2021 = Doge.head(481)
 # Chart looking at Jan 2020 to Apr 2021.
 Doge_2020_2021.plot(x="Date", y="Price", title='Doge stock price Apr 2012 - Jan 2020', color='red')
 #plt.show()
-#plt.savefig("Doge stock price Apr 2012 - Jan 2020")
+plt.savefig("Doge stock price Apr 2012 - Jan 2020")
 
 # Sort data by change % to find the outlier, the date with greatest % increase.
 Outlier = Doge.sort_values(["Change %"], ascending=False)
@@ -92,12 +92,10 @@ ax.set_xlabel("Growth by Date (2009 - 2018)")
 ax.legend(["google Stock Price", "AMD Stock Price"])
 ax.set_title("Google Vs AMD stock growth")
 #plt.show()
-#plt.savefig("Ggl_Vs_AMD chart")
+plt.savefig("Ggl_Vs_AMD chart")
 
 Glg_AMD_2017_2018 = Ggl_AMD_Compare["2017-01-01":"2018-12-31"]
 #print(Glg_AMD_2017_2018.head())
-
-
 
 # Graph Google and AMD 2017 - 2018 to review growth in last year
 fig, ax = plt.subplots()
@@ -110,18 +108,16 @@ ax.set_xlabel("Growth by Date (2017 - 2018)")
 ax.legend(["google Stock Price", "AMD Stock Price"])
 ax.set_title("Google Vs AMD growth 2017 - 2018")
 #plt.show()
+plt.savefig("Ggl_Vs_AMD 2017 - 2018 chart")
 
 Google = pd.read_csv("GOOGL.csv")
 A_M_D = pd.read_csv("AMD.csv")
 
-#Google_2017_2018 = Google["2017-01-01":"2018-12-31"]
-#AMD_2017_2018 = A_M_D["2017-01-01":"2018-12-31"]
-
 Google.plot(x="Date", y="Close", rot=90, title='Google 2009- 2018')
-#plt.x_label = "Date 2009-2018"
-#plt.y_label = "Market_share,$"
+plt.x_label = "Date 2009-2018"
+plt.y_label = "Market_share,$"
 
-A_M_D.plot(x="Date", y="Close", rot=90, title='AMD 2009 - 2018',color='red')
+A_M_D.plot(x="Date", y="Close", rot=90, title='AMD 2009 - 2018', color='red')
 plt.x_label = "Date 2009-2018"
 plt.y_label = "Market_share,$"
 #plt.show()
@@ -133,22 +129,21 @@ AMD_2years = A_M_D.tail(365)
 #print(AMD_2years.head())
 
 Google_2Years.plot(x="Date", y="Close", rot=90, title='Google 2017- 2018')
-AMD_2years.plot(x="Date", y="Close", rot=90, title='AMD 2017 - 2018',color='red')
+AMD_2years.plot(x="Date", y="Close", rot=90, title='AMD 2017 - 2018', color='red')
 #plt.show()
 
-# Dictionaries or list - use Numpy
+# using Numpy arrays to review if sales targets are reached
 
-Months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sept','Oct','Nov','Dec']
-Sales = [215.11, 548.36, 156.89, 468.25, 216.94, 258.36, 327.48, 164.12, 756.21, 564.12, 658.12, 389.16]
-Annual_sales_array = np.array ([Months, Sales])
-Sales_array = np.array(Sales)
-Targets = [300, 300, 300, 300,300, 300, 400, 400, 400, 400, 400, 200]
+Months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec']
+Sales_yr1 = [215.11, 548.36, 156.89, 468.25, 216.94, 258.36, 227.48, 164.12, 756.21, 564.12, 658.12, 389.16]
+Sales_array = np.array(Sales_yr1)
+Targets = [200, 200, 300, 300, 300, 400, 400, 400, 500, 500, 500, 500]
 Targets_array = np.array(Targets)
 
-indexing_Qtr1 = np.array([0,1,2])
-indexing_Qtr2 = np.array([3,4,5])
-indexing_Qtr3 = np.array([6,7,8])
-indexing_Qtr4 = np.array([9,10,11])
+indexing_Qtr1 = np.array([0, 1, 2])
+indexing_Qtr2 = np.array([3, 4, 5])
+indexing_Qtr3 = np.array([6, 7, 8])
+indexing_Qtr4 = np.array([9, 10, 11])
 
 Qtr1_sales = Sales_array[indexing_Qtr1].sum()
 Qtr2_sales = Sales_array[indexing_Qtr2].sum()
@@ -168,3 +163,39 @@ print(Qtr1_target_complete)
 print(Qtr2_target_complete)
 print(Qtr3_target_complete)
 print(Qtr4_target_complete)
+
+Sales_Yr2 = [301.25, 256.48, 320.36, 556.25, 425.48, 236.48, 268.49, 584.36, 843.16, 677.68, 799.26, 862.46]
+Targets_Yr2 = [400, 400, 400, 400, 400, 300, 300, 600, 600, 600, 700, 700]
+Sales_Yr2_array = np.array(Sales_Yr2)
+Target_Yr2_array = np.array(Targets_Yr2)
+
+Annual_sales_array = np.array([Months, Sales_yr1, Sales_Yr2, Targets])
+#print(Annual_sales_array)
+# Transpose data to make a chart
+Annual_Sales = np.transpose(Annual_sales_array)
+
+
+plt.plot(Months, Sales_yr1, color='blue', label='Sales Yr1')
+plt.plot(Months, Sales_Yr2, color='green', label='Sales Yr2')
+plt.plot(Months, Targets, color='red', linestyle='--', label='Targets')
+plt.xlabel('Months')
+plt.ylabel('Sales per Month $')
+plt.title('Yr1 & Yr2 Sales Vs Target year 1')
+plt.legend()
+#plt.show()
+plt.savefig("Sales Vs Yr1 Targets chart")
+
+plt.plot(Months, Sales_yr1, color='blue', label='Sales Yr1')
+plt.plot(Months, Sales_Yr2, color='green', label='Sales Yr2')
+plt.plot(Months, Targets_Yr2, color='red', linestyle='--', label='Targets_Yr2')
+plt.xlabel('Months')
+plt.ylabel('Sales per Month $')
+plt.title('Yr1 & Yr2 Sales Vs Yr2 Target')
+plt.legend()
+#plt.show()
+plt.savefig("Sales Vs Yr2 Targets chart")
+
+data= [['Months', Sales_yr1, Sales_Yr2, Targets, Targets_Yr2]]
+columns = [Months, Sales_yr1, Sales_Yr2, Targets, Targets_Yr2]
+Company_sales = pd.DataFrame(data= data, columns= columns)
+print(Company_sales)
