@@ -1,6 +1,15 @@
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+import requests
+
+# API
+ISS_persons = requests.get("http://api.open-notify.org/astros.json")
+Space_people = ISS_persons.json()
+print(Space_people['number'])
+
+for Name in Space_people['people']:
+    print(Name['name'])
 
 # importing CSV file
 Forbes_top2000 = pd.read_csv("Forbes Top2000 2017.csv")
