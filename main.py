@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
+# importing CSV file
 Forbes_top2000 = pd.read_csv("Forbes Top2000 2017.csv")
 print(Forbes_top2000.head())
 Forbes_top2000.drop(columns="Unnamed: 0", axis=1, inplace=True)
@@ -66,8 +67,6 @@ print(Ggl_vs_AMD.head())
 
 # Subset for Open stock price for both Data sets.
 Ggl_AMD_Compare = Ggl_vs_AMD[["Close_Ggl", "Close_AMD"]]
-print(Ggl_AMD_Compare.info())
-
 
 # plotting Google Vs AMD stock prices 2009 - 2018
 fig, ax = plt.subplots()
