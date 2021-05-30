@@ -11,7 +11,7 @@ print(Space_people['number'])
 for Name in Space_people['people']:
     print(Name['name'])
 
-# importing CSV file
+# importing CSV file dropping and replacing missing values.
 Forbes_top2000 = pd.read_csv("Forbes Top2000 2017.csv")
 print(Forbes_top2000.head())
 Forbes_top2000.drop(columns="Unnamed: 0", axis=1, inplace=True)
@@ -20,11 +20,10 @@ Forbes_missing = Forbes_top2000.isnull().sum()
 print(Forbes_missing)
 Forbes = Forbes_top2000.fillna("unknown")
 print(Forbes.info())
-
 Forbes_sectors = Forbes[["Sector", "Market Value"]]
 print(Forbes_sectors.head())
 
-# Data grouped by 'sectors' to find their total market share
+# Data grouped by 'Sectors' to find their total market share
 Best_sector = Forbes_sectors.groupby("Sector")["Market Value"].sum()
 print(Best_sector)
 
@@ -50,7 +49,7 @@ Doge_2020_2021.plot(x="Date", y="Price", title='Doge stock price Apr 2021 - Jan 
 plt.show()
 # plt.savefig("Doge stock price Apr 2021 - Jan 2020.png")
 
-# Sort data by change % to find the outlier, the date with greatest % increase.
+# Sorting data by change % to find the outlier, the date with greatest % increase.
 Outlier = Doge.sort_values(["Change %"], ascending=False)
 print(Outlier.head(1))
 
@@ -67,6 +66,7 @@ print(Above_Standard)
 Extraordinary_days = Doge[Doge["Change %"] > 164.647]
 print(Extraordinary_days)
 
+# Import CSV indexing with the Date column.
 Ggl = pd.read_csv("GOOGL.csv", index_col="Date")
 AMD = pd.read_csv("AMD.csv", index_col="Date")
 
